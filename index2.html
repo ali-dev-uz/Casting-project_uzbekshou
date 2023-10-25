@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Information Form</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="./btn.css">
+</head>
+<body>
+    <div class="container">
+        <div method="post" enctype="multipart/form-data">
+
+                <h1>Shaxsiy ma'lumot:
+                </h1>
+          
+
+            </h1>
+            <div class="gender-select">
+                <label for="gender">Jins:</label>
+                <input type="radio" name="gender" value="man" id="man" required>
+                <label for="man">Erkak</label>
+                <input type="radio" name="gender" value="woman" id="woman" required>
+                <label for="woman">Ayol</label>
+            </div>
+
+            <div id="manDiv" style="display: none;">
+                <form id="manForm" type="submit">
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Name" name="manName" id="manName" required />
+                        <label for="manName" class="form__label">F.I.O</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="City" name="manCity" id="manCity" required />
+                        <label for="manCity" class="form__label">Viloyati</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Nationality" name="manNationality" id="manNationality" required />
+                        <label for="manNationality" class="form__label">Millati</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="date" class="form__field" name="manBirthdate" id="manBirthdate" required />
+                        <label for="manBirthdate" class="form__label">Tug'ilgan kuni:</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="number" class="form__field" name="manAge" id="manAge" required />
+                        <label for="manAge" class="form__label">Yoshi</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="number" class="form__field" name="manHeight" id="manHeight" required />
+                        <label for="manHeight" class="form__label">Balandligi (sm)</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Hair Color" name="manHairColor" id="manHairColor" required />
+                        <label for="manHairColor" class="form__label">Sochning rangi</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Eye Color" name="manEyeColor" id="manEyeColor" required />
+                        <label for="manEyeColor" class="form__label">Ko'z rangi</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Clothing Size" name="manClothingSize" id="manClothingSize" required />
+                        <label for="manClothingSize" class="form__label">Kiyim o'lchami</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Shoe Size" name="manShoeSize" id="manShoeSize" required />
+                        <label for="manShoeSize" class="form__label">Oyoq kiyim o'lchami</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="email" class="form__field" placeholder="Email" name="manEmail" id="manEmail" required />
+                        <label for="manEmail" class="form__label">E-mail</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="tel" class="form__field" placeholder="Phone Number" name="manPhoneNumber" id="manPhoneNumber" required />
+                        <label for="manPhoneNumber" class="form__label">Telefon raqam</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Telegram" name="manTelegram" id="manTelegram" />
+                        <label for="manTelegram" class="form__label">Telegram</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Facebook" name="manFacebook" id="manFacebook" />
+                        <label for="manFacebook" class="form__label">Facebook</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Instagram" name="manInstagram" id="manInstagram" />
+                        <label for="manInstagram" class="form__label">Instagram</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="file" class="form__field" name="manPhotos" id="manPhotos" accept="image/*" multiple required />
+                        <label for="manPhotos" class="form__label">Foto(Eng kamida 5 ta,Qadi-qomatingiz bilinishi lozim !)</label>
+                    </div>
+                    <div style="margin: 20px;">
+                        <div style="width: 200px; height: 60px;">
+                            <button id="manFormButton" style="border: none;" href="#" class="button type--A">
+                                <div class="button__line"></div>
+                                <div class="button__line"></div>
+                                <span class="button__text">Saqlash</span>
+                                <div class="button__drow1"></div>
+                                <div class="button__drow2"></div>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div id="womanDiv" style="display: none;">
+                <form id="womanForm">
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Name" name="womanName" id="womanName" required />
+                        <label for="womanName" class="form__label">F.I.O</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="City" name="womanCity" id="womanCity" required />
+                        <label for="womanCity" class="form__label">Viloyati</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Nationality" name="womanNationality" id="womanNationality" required />
+                        <label for="womanNationality" class="form__label">Millati</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="date" class="form__field" name="womanBirthdate" id="manBirthdate" required />
+                        <label for="womanBirthdate" class="form__label">Tug'ilgan kuni:</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="number" class="form__field" name="womanAge" id="womanAge" required />
+                        <label for="womanAge" class="form__label">Yoshi</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="number" class="form__field" name="womanHeight" id="womanHeight" required />
+                        <label for="womanHeight" class="form__label">Balandligi (sm)</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="number" class="form__field" name="womanKokrak" id="womanKokrak" required />
+                        <label for="womanKokrak" class="form__label">Yelkadan pastki qismni uzunligi (sm)</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="number" class="form__field" name="womanWaistType" id="womanWaistType" required />
+                        <label for="womanWaistType" class="form__label">Bel qismni uzunligi (sm)</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="number" class="form__field" name="womanChestType" id="womanChestType" required />
+                        <label for="womanChestType" class="form__label">Oyoqning son qismi o'lchami (sm)</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Hair Color" name="womanHairColor" id="womanHairColor" required />
+                        <label for="womanHairColor" class="form__label">Sochning rangi</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Eye Color" name="womanEyeColor" id="womanEyeColor" required />
+                        <label for="womanEyeColor" class="form__label">Ko'z rangi</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Clothing Size" name="womanClothingSize" id="womanClothingSize" required />
+                        <label for="womanClothingSize" class="form__label">Kiyim o'lchami</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Shoe Size" name="womanShoeSize" id="womanShoeSize" required />
+                        <label for="womanShoeSize" class="form__label">Oyoq kiyim o'lchami</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="email" class="form__field" placeholder="Email" name="womanEmail" id="womanEmail" required />
+                        <label for="womanEmail" class="form__label">E-mail</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="tel" class="form__field" placeholder="Phone Number" name="womanPhoneNumber" id="womanPhoneNumber" required />
+                        <label for="womanPhoneNumber" class="form__label">Telefon raqam</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Telegram" name="womanTelegram" id="womanTelegram" />
+                        <label for="womanTelegram" class="form__label">Telegram</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Facebook" name="womanFacebook" id="womanFacebook" />
+                        <label for="womanFacebook" class="form__label">Facebook</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="text" class="form__field" placeholder="Instagram" name="womanInstagram" id="womanInstagram" />
+                        <label for="womanInstagram" class="form__label">Instagram</label>
+                    </div>
+                    <div class="form__group field">
+                        <input type="file" class="form__field" name="womanPhotos" id="womanPhotos" accept="image/*" multiple required />
+                        <label for="womanPhotos" class="form__label">Foto(Eng kamida 5 ta,Qadi-qomatingiz bilinishi lozim !)</label>
+                    </div>
+                    <div style="margin: 20px;">
+                        <div style="width: 200px; height: 60px;">
+                            <button id="womanFormButton" style="border: none;" href="#" class="button type--A">
+                                <div class="button__line"></div>
+                                <div class="button__line"></div>
+                                <span class="button__text">Saqlash</span>
+                                <div class="button__drow1"></div>
+                                <div class="button__drow2"></div>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="https://telegram.org/js/telegram-web-app.js"></script>
+        <script src="script.js"></script>
+        <script>
+            document.getElementById("man").addEventListener("change", function () {
+                if (this.checked) {
+                    document.getElementById("manDiv").style.display = "block";
+                    document.getElementById("womanDiv").style.display = "none";
+                }
+            });
+        
+            document.getElementById("woman").addEventListener("change", function () {
+                if (this.checked) {
+                    document.getElementById("womanDiv").style.display = "block";
+                    document.getElementById("manDiv").style.display = "none";
+                }
+            });
+        
+            let tg = window.Telegram.WebApp;
+            let user = {};
+            // user.tg_name = tg.initDataUnsafe.user.first_name;
+
+            // userNameSpan.textContent = user.tg_name;
+        
+           
+        </script>
+        
+    </div>
+</body>
+</html>
