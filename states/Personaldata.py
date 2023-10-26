@@ -6,7 +6,6 @@ class Comment(StatesGroup):
     input_video = State()
 
 
-# Admin qo'shish uchun
 class Manual(StatesGroup):
     manual_done = State()
 
@@ -17,3 +16,11 @@ class Organ(StatesGroup):
 
 class Market(StatesGroup):
     media = State()
+
+
+class Selections(StatesGroup):
+    lan = State()
+
+
+class Welcome(StatesGroup):
+    wel = State()

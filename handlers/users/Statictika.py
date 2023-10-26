@@ -1,17 +1,18 @@
 from aiogram import types
 
 from filters import IsGroup
-from handlers.users.archive import DAILY, WEEKLY, MONTHLY, CHANNELS
+from handlers.users.archive import CHANNELS
 from loader import dp, db
 
 
 @dp.message_handler(IsGroup(), text="📊 Statistika")
 async def finish(message: types.Message):
     members = await db.count_users()
+    server_data = await db.select_static_one(data_id=1)
     await message.answer(f"<b>👥 Obunachilar:</b> {members} ta\n"
-                         f"<b>➕ Kunlik qo'shilishlar:</b> {DAILY} ta\n"
-                         f"<b>➕ Haftalik qo'shilishlar:</b> {WEEKLY} ta\n"
-                         f"<b>➕ Oylik qo'shilishlar: </b> {MONTHLY} ta")
+                         f"<b>➕ Kunlik qo'shilishlar:</b> {server_data['days']} ta\n"
+                         f"<b>➕ Haftalik qo'shilishlar:</b> {server_data['weekly']} ta\n"
+                         f"<b>➕ Oylik qo'shilishlar: </b> {server_data['monthly']} ta")
 
 
 async def membership(user_id):

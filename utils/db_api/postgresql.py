@@ -61,7 +61,8 @@ class Database:
         instagram VARCHAR(100) NULL,
         breast_size VARCHAR(10) NULL,
         waist_size VARCHAR(10) NULL,
-        footless_size VARCHAR(10) NULL
+        footless_size VARCHAR(10) NULL,
+        species VARCHAR(50) NULL
         );
         """
         await self.execute(sql, execute=True)
@@ -76,13 +77,13 @@ class Database:
 
     async def add_user(self, telegram_id, language_db, name_db, city, nationality, birthday, age, height_length,
                        hair_color, eye_color, dress_size, footwear_size, email, phone_number, telegram, facebook,
-                       instagram, breast_size, waist_size, footless_size):
-        sql = "INSERT INTO users (telegram_id, language_db, name_db, city, nationality, birthday, age, height_length, hair_color, eye_color, dress_size, footwear_size, email, phone_number, telegram, facebook, instagram, breast_size, waist_size, footless_size) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20) returning *"
+                       instagram, breast_size, waist_size, footless_size, species):
+        sql = "INSERT INTO users (telegram_id, language_db, name_db, city, nationality, birthday, age, height_length, hair_color, eye_color, dress_size, footwear_size, email, phone_number, telegram, facebook, instagram, breast_size, waist_size, footless_size, species) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) returning *"
         return await self.execute(sql, telegram_id, language_db, name_db, city, nationality, birthday, age,
                                   height_length,
                                   hair_color, eye_color, dress_size, footwear_size, email, phone_number, telegram,
                                   facebook,
-                                  instagram, breast_size, waist_size, footless_size, fetchrow=True)
+                                  instagram, breast_size, waist_size, footless_size, species, fetchrow=True)
 
     async def select_users_one(self, telegram_id):
         sql = "SELECT * FROM users WHERE telegram_id=$1"
@@ -92,13 +93,13 @@ class Database:
         sql = "SELECT COUNT(*) FROM users"
         return await self.execute(sql, fetchval=True)
 
-    async def update_user_message_id(self, Message_id, Chat_id):
-        sql = "UPDATE users SET Message_id=$1 WHERE Chat_id=$2"
-        return await self.execute(sql, Message_id, Chat_id, execute=True)
+    async def update_language_db(self, language_db, telegram_id):
+        sql = "UPDATE users SET language_db=$1 WHERE telegram_id=$2"
+        return await self.execute(sql, language_db, telegram_id, execute=True)
 
-    async def update_user_quiz_idex(self, Quiz_idex, Chat_id):
-        sql = "UPDATE users SET Quiz_idex=$1 WHERE Chat_id=$2"
-        return await self.execute(sql, Quiz_idex, Chat_id, execute=True)
+    async def update_species(self, species, telegram_id):
+        sql = "UPDATE users SET species=$1 WHERE telegram_id=$2"
+        return await self.execute(sql, species, telegram_id, execute=True)
 
     async def update_user_answers(self, Answers, Chat_id):
         sql = "UPDATE users SET Answers=$1 WHERE Chat_id=$2"
@@ -134,7 +135,7 @@ class Database:
     async def create_data_static(self):
         sql = """
         CREATE TABLE IF NOT EXISTS data_stat (
-        data_id BIGINT NOT NULL,
+        data_id BIGINT NOT NULL UNIQUE,
         monthly BIGINT NOT NULL,
         days BIGINT NOT NULL,
         weekly BIGINT NOT NULL
@@ -165,3 +166,10 @@ class Database:
     async def update_weekly(self, weekly, data_id):
         sql = "UPDATE data_stat SET weekly=$1 WHERE data_id=$2"
         return await self.execute(sql, weekly, data_id, execute=True)
+
+    async def select_static_one(self, data_id):
+        sql = "SELECT * FROM data_stat WHERE data_id=$1"
+        return await self.execute(sql, data_id, fetchrow=True)
+
+    async def drop_static(self):
+        await self.execute("DROP TABLE data_stat", execute=True)

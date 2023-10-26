@@ -11,7 +11,8 @@ from utils.set_bot_commands import set_default_commands
 async def on_startup(dispatcher):
     sched = AsyncIOScheduler()
     await db.create()
-    # await db.drop_users()
+    await db.drop_users()
+    # await db.drop_static()
     await db.create_table_users()
     await db.create_data_static()
     # Default commands (/star and /help)
