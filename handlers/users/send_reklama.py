@@ -32,7 +32,7 @@ async def send_bax(message: types.Message, state: FSMContext):
         except exceptions.ChatNotFound as e:
             logging.error(f"ChatNotFound error: {e}")
         except Exception as err:
-            logging.error(f"ChatNotFound error: {err}")
+            logging.error(f"All error: {err}")
 
 
 
