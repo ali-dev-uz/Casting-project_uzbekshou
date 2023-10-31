@@ -22,33 +22,39 @@ async def bot_start(message: types.Message):
         pass
     user_id = message.from_user.id
     try:
-        await db.add_user(telegram_id=user_id,
-                          language_db=None,
-                          name_db=None,
-                          city=None,
-                          nationality=None,
-                          birthday=None,
-                          age=None,
-                          height_length=None,
-                          hair_color=None,
-                          eye_color=None,
-                          dress_size=None,
-                          footless_size=None,
-                          footwear_size=None,
-                          email=None,
-                          phone_number=None,
-                          telegram=None,
-                          facebook=None,
-                          instagram=None,
-                          breast_size=None,
-                          waist_size=None,
-                          species=None)
-        await send_start_lan(user_id)
-        server_info = await db.select_static_one(data_id=1)
-        await db.update_day(days=int(server_info['days']) + 1, data_id=1)
-        await db.update_weekly(weekly=int(server_info['weekly']) + 1, data_id=1)
-        await db.update_monthly(monthly=int(server_info['monthly']) + 1, data_id=1)
-        await Personaldata.Selections.lan.set()
+        if user_id in ADMIN_S:
+            await message.answer(
+                f"<b>👋 Assalomu alaykum Admin</b>", reply_markup=menu_admin)
+        else:
+            await db.add_user(telegram_id=user_id,
+                              language_db=None,
+                              name_db=None,
+                              city=None,
+                              nationality=None,
+                              birthday=None,
+                              age=None,
+                              height_length=None,
+                              hair_color=None,
+                              eye_color=None,
+                              dress_size=None,
+                              footless_size=None,
+                              footwear_size=None,
+                              email=None,
+                              phone_number=None,
+                              telegram=None,
+                              facebook=None,
+                              instagram=None,
+                              breast_size=None,
+                              waist_size=None,
+                              species=None,
+                              gender=None,
+                              photo='[]')
+            await send_start_lan(user_id)
+            server_info = await db.select_static_one(data_id=1)
+            await db.update_day(days=int(server_info['days']) + 1, data_id=1)
+            await db.update_weekly(weekly=int(server_info['weekly']) + 1, data_id=1)
+            await db.update_monthly(monthly=int(server_info['monthly']) + 1, data_id=1)
+            await Personaldata.Selections.lan.set()
     except asyncpg.exceptions.UniqueViolationError:
         if user_id in ADMIN_S:
             await message.answer(

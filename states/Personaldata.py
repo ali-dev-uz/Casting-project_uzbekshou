@@ -24,3 +24,15 @@ class Selections(StatesGroup):
 
 class Welcome(StatesGroup):
     wel = State()
+
+
+class PersonalInfo(StatesGroup):
+    info = State()
+
+
+class PersonalPhoto(StatesGroup):
+    photo = State()
+
+
+class PaymeData(StatesGroup):
+    pay_data = State()

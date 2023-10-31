@@ -33,5 +33,5 @@ class ThrottlingMiddleware(BaseMiddleware):
             raise CancelHandler()
 
     async def message_throttled(self, message: types.Message, throttled: Throttled):
-        if throttled.exceeded_count <= 4:
+        if throttled.exceeded_count >= 10:
             await message.reply("Juda ko'p so'rovlar!\nIltimos sabr qiling")

@@ -1,7 +1,9 @@
 import asyncio
+import logging
 
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from aiogram.utils import exceptions
 
 from filters import IsGroup
 from handlers.users.archive import ADMIN_S
@@ -27,8 +29,11 @@ async def send_bax(message: types.Message, state: FSMContext):
             await dp.bot.copy_message(chat_id=int(sender['telegram_id']), from_chat_id=message.chat.id,
                                       message_id=message.message_id)
             await asyncio.sleep(0.8)
-        except:
-            pass
+        except exceptions.ChatNotFound as e:
+            logging.error(f"ChatNotFound error: {e}")
+        except Exception as err:
+            logging.error(f"ChatNotFound error: {err}")
+
 
 
 @dp.message_handler(state=Personaldata.Market.media, text="🔙 Orqaga")

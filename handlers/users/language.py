@@ -18,6 +18,11 @@ async def done_language(call: types.CallbackQuery, state: FSMContext):
     await Personaldata.Welcome.wel.set()
 
 
+@dp.message_handler(state=Personaldata.Selections.lan)
+async def state_re(message: types.Message):
+    await send_start_lan(message.chat.id)
+
+
 @dp.callback_query_handler(text=["uz", "ru"])
 async def done_language(call: types.CallbackQuery):
     if call.data == "uz":

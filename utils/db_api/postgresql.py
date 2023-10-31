@@ -62,7 +62,9 @@ class Database:
         breast_size VARCHAR(10) NULL,
         waist_size VARCHAR(10) NULL,
         footless_size VARCHAR(10) NULL,
-        species VARCHAR(50) NULL
+        species VARCHAR(50) NULL,
+        gender VARCHAR(50) NULL,
+        photo VARCHAR(1000) NULL
         );
         """
         await self.execute(sql, execute=True)
@@ -77,13 +79,14 @@ class Database:
 
     async def add_user(self, telegram_id, language_db, name_db, city, nationality, birthday, age, height_length,
                        hair_color, eye_color, dress_size, footwear_size, email, phone_number, telegram, facebook,
-                       instagram, breast_size, waist_size, footless_size, species):
-        sql = "INSERT INTO users (telegram_id, language_db, name_db, city, nationality, birthday, age, height_length, hair_color, eye_color, dress_size, footwear_size, email, phone_number, telegram, facebook, instagram, breast_size, waist_size, footless_size, species) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21) returning *"
+                       instagram, breast_size, waist_size, footless_size, species, gender, photo):
+        sql = "INSERT INTO users (telegram_id, language_db, name_db, city, nationality, birthday, age, height_length, hair_color, eye_color, dress_size, footwear_size, email, phone_number, telegram, facebook, instagram, breast_size, waist_size, footless_size, species, gender, photo) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23) returning *"
         return await self.execute(sql, telegram_id, language_db, name_db, city, nationality, birthday, age,
                                   height_length,
                                   hair_color, eye_color, dress_size, footwear_size, email, phone_number, telegram,
                                   facebook,
-                                  instagram, breast_size, waist_size, footless_size, species, fetchrow=True)
+                                  instagram, breast_size, waist_size, footless_size, species, gender, photo,
+                                  fetchrow=True)
 
     async def select_users_one(self, telegram_id):
         sql = "SELECT * FROM users WHERE telegram_id=$1"
@@ -101,13 +104,23 @@ class Database:
         sql = "UPDATE users SET species=$1 WHERE telegram_id=$2"
         return await self.execute(sql, species, telegram_id, execute=True)
 
-    async def update_user_answers(self, Answers, Chat_id):
-        sql = "UPDATE users SET Answers=$1 WHERE Chat_id=$2"
-        return await self.execute(sql, Answers, Chat_id, execute=True)
+    async def update_all(self, name_db, city, nationality, birthday, age, height_length,
+                         hair_color, eye_color, dress_size, footwear_size, email, phone_number, telegram, facebook,
+                         instagram, breast_size, waist_size, footless_size, gender, telegram_id):
+        sql = ("UPDATE users SET name_db=$1, city=$2, nationality=$3, birthday=$4, age=$5, height_length=$6, "
+               "hair_color=$7, "
+               "eye_color=$8, dress_size=$9, footwear_size=$10, email=$11, phone_number=$12, telegram=$13, facebook=$14,"
+               "instagram=$15, breast_size=$16,"
+               "waist_size=$17, footless_size=$18, gender=$19 WHERE telegram_id=$20")
+        return await self.execute(sql, name_db, city, nationality, birthday, age,
+                                  height_length,
+                                  hair_color, eye_color, dress_size, footwear_size, email, phone_number, telegram,
+                                  facebook,
+                                  instagram, breast_size, waist_size, footless_size, gender, telegram_id, execute=True)
 
-    async def update_user_secret(self, secret, Telegram_id):
-        sql = "UPDATE users SET secret=$1 WHERE Telegram_id=$2"
-        return await self.execute(sql, secret, Telegram_id, execute=True)
+    async def update_photo(self, photo, telegram_id):
+        sql = "UPDATE users SET photo=$1 WHERE telegram_id=$2"
+        return await self.execute(sql, photo, telegram_id, execute=True)
 
     async def count_users_one(self):
         sql = "SELECT * FROM users"
@@ -173,3 +186,73 @@ class Database:
 
     async def drop_static(self):
         await self.execute("DROP TABLE data_stat", execute=True)
+
+    async def create_data_message(self):
+        sql = """
+        CREATE TABLE IF NOT EXISTS message (
+        message_id BIGINT NOT NULL UNIQUE,
+        telegram_id BIGINT NOT NULL,
+        photo_id VARCHAR(1000) NULL,
+        chat_id BIGINT NOT NULL
+        );
+        """
+        await self.execute(sql, execute=True)
+
+    @staticmethod
+    def format_args3(sql, parameters: dict):
+        sql += " AND ".join([
+            f"{item} = ${num}" for num, item in enumerate(parameters.keys(),
+                                                          start=1)
+        ])
+        return sql, tuple(parameters.values())
+
+    async def add_data_message(self, message_id, telegram_id, photo_id, chat_id):
+        sql = "INSERT INTO message (message_id, telegram_id, photo_id, chat_id) VALUES($1, $2, $3, $4) returning *"
+        return await self.execute(sql, message_id, telegram_id, photo_id, chat_id, fetchrow=True)
+
+    async def select_message_data(self, message_id):
+        sql = "SELECT * FROM message WHERE message_id=$1"
+        return await self.execute(sql, message_id, fetchrow=True)
+
+    async def select_all_data(self, telegram_id):
+        sql = "SELECT * FROM message WHERE telegram_id=$1"
+        return await self.execute(sql, telegram_id, fetch=True)
+
+    async def delete_data(self, telegram_id):
+        sql = "DELETE FROM message WHERE telegram_id=$1"
+        return await self.execute(sql, telegram_id, fetch=True)
+
+    async def drop_data(self):
+        await self.execute("DROP TABLE message", execute=True)
+
+    async def create_data_pay_message(self):
+        sql = """
+        CREATE TABLE IF NOT EXISTS message_pay (
+        message_id BIGINT NOT NULL UNIQUE,
+        telegram_id BIGINT NOT NULL
+        );
+        """
+        await self.execute(sql, execute=True)
+
+    @staticmethod
+    def format_args4(sql, parameters: dict):
+        sql += " AND ".join([
+            f"{item} = ${num}" for num, item in enumerate(parameters.keys(),
+                                                          start=1)
+        ])
+        return sql, tuple(parameters.values())
+
+    async def add_data_message_pay(self, message_id, telegram_id):
+        sql = "INSERT INTO message_pay (message_id, telegram_id) VALUES($1, $2) returning *"
+        return await self.execute(sql, message_id, telegram_id, fetchrow=True)
+
+    async def select_message_data_pay(self, message_id):
+        sql = "SELECT * FROM message_pay WHERE message_id=$1"
+        return await self.execute(sql, message_id, fetchrow=True)
+
+    async def delete_data_pay(self, telegram_id):
+        sql = "DELETE FROM message_pay WHERE telegram_id=$1"
+        return await self.execute(sql, telegram_id, fetch=True)
+
+    async def drop_data_pay(self):
+        await self.execute("DROP TABLE message_pay", execute=True)
