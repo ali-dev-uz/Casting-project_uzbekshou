@@ -53,7 +53,6 @@ async def admin_check_handler(call: types.CallbackQuery):
 
         for delete_data in await db.select_all_data(casting_user):
             try:
-                await dp.bot.send_video()
                 string_list_loop = delete_data["photo_id"]
                 result_list_loop = ast.literal_eval(string_list_loop)
                 for loop_id in result_list_loop:
