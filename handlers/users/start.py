@@ -13,13 +13,7 @@ from states import Personaldata
 # Start qabul qiluvchi handler
 @dp.message_handler(IsGroup(), CommandStart())
 async def bot_start(message: types.Message):
-    try:
-        await db.add_data(data_id=1,
-                          days=0,
-                          weekly=0,
-                          monthly=0)
-    except asyncpg.exceptions.UniqueViolationError:
-        pass
+
     user_id = message.from_user.id
     try:
         if user_id in ADMIN_S:

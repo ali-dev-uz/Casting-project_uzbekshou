@@ -54,7 +54,9 @@ async def input_images(message: types.Message, state: FSMContext):
 
 
 @dp.callback_query_handler(text=['done_pay', 'not_pay'])
-async def admin_check_inline_button(call: types.CallbackQuery):
+async def admin_check_inline_button(call_msg: types.CallbackQuery):
+    call = call_msg
+    await call_msg.message.delete()
     castings_id = await db.select_message_data_pay(message_id=call.message.message_id)
     language_admin_check_inline_button = await db.select_users_one(telegram_id=castings_id['telegram_id'])
     if call.data == 'done_pay':
@@ -135,4 +137,3 @@ async def admin_check_inline_button(call: types.CallbackQuery):
             logging.error(f"ChatNotFound error: {e}")
 
     await db.delete_data_pay(telegram_id=castings_id['telegram_id'])
-    await call.message.delete()

@@ -126,9 +126,9 @@ class Database:
         sql = "SELECT * FROM users"
         return await self.execute(sql, fetch=True)
 
-    async def update_user_ammount(self, Ammaount, Telegram_id):
-        sql = "UPDATE users SET Ammaount=$1 WHERE Telegram_id=$2"
-        return await self.execute(sql, Ammaount, Telegram_id, execute=True)
+    async def update_user_photo(self, photo, telegram_id):
+        sql = "UPDATE users SET photo=$1 WHERE telegram_id=$2"
+        return await self.execute(sql, photo, telegram_id, execute=True)
 
     async def update_user_lavarge(self, Leverage, Telegram_id):
         sql = "UPDATE users SET Leverage=$1 WHERE Telegram_id=$2"

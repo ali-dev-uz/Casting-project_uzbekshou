@@ -9,7 +9,8 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeybo
 from aiogram.utils import exceptions
 
 from data.config import CHECKER_ADMIN, SEND_CHANNELS
-from handlers.users.vocabulary_words import acceptance_text, limit_photo, keyword_photo_name, anime, anime_grap
+from handlers.users.vocabulary_words import acceptance_text, limit_photo, keyword_photo_name, anime, anime_grap, \
+    no_photo
 from loader import dp, db
 from states import Personaldata
 
@@ -28,6 +29,7 @@ async def done_photo(message: types.Message):
         logging.error(f"ChatNotFound error: {err}")
 
 
+
 async def download_photo(photo: types.PhotoSize) -> str:
     file = await photo.download()
     return file.name
@@ -40,7 +42,6 @@ async def download_video(video: types.Video) -> str:
     except:
         file_vide = await video.download()
         return file_vide.name
-
 
 
 async def upload_image_to_telegraph(file_path):
@@ -70,6 +71,7 @@ async def acceptance_images(message: types.Message, state: FSMContext):
                                                          text=f"{anime[language_request_acceptance['language_db']]}{anm}")
             anime_id = new_message
             await asyncio.sleep(0.2)
+        await anime_id.delete()
         await message.answer(text=acceptance_text[language_request_acceptance['language_db']],
                              reply_markup=types.ReplyKeyboardRemove())
         album = types.MediaGroup()

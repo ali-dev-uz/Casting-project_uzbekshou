@@ -12,11 +12,23 @@ from utils.counter_payme import fetch_data
 
 
 @dp.callback_query_handler(text=['not', 'done', 'tips'])
-async def admin_check_handler(call: types.CallbackQuery):
+async def admin_check_handler(call_msg: types.CallbackQuery):
+    call = call_msg
     message_id = call.message.message_id
     data_all = await db.select_message_data(message_id)
     casting_user = data_all['telegram_id']
     language_request_caster = await db.select_users_one(telegram_id=casting_user)
+    for delete_data in await db.select_all_data(casting_user):
+        try:
+            string_list_loop = delete_data["photo_id"]
+            result_list_loop = ast.literal_eval(string_list_loop)
+            for loop_id in result_list_loop:
+                await dp.bot.delete_message(chat_id=delete_data['chat_id'],
+                                            message_id=loop_id)
+            await dp.bot.delete_message(chat_id=delete_data['chat_id'],
+                                        message_id=delete_data['message_id'])
+        except exceptions.ChatNotFound as e:
+            logging.error(f"ChatNotFound error: {e}")
     try:
         if call.data == 'not':
             await dp.bot.send_message(chat_id=casting_user, text=not_response[language_request_caster['language_db']])
@@ -30,7 +42,7 @@ async def admin_check_handler(call: types.CallbackQuery):
             await dp.bot.send_message(chat_id=casting_user,
                                       text=f"{done_response[language_request_caster['language_db']]}\n"
                                            f"{pay_data_1[language_request_caster['language_db']]}\n"
-                                           f"{pay_data_2[language_request_caster['language_db']]} 80$ (🇺🇿{pay_counter}{pay_data_3[language_request_caster['language_db']]})\n"
+                                           f"{pay_data_2[language_request_caster['language_db']]}- 80$ (=🇺🇿{int(pay_counter)} {pay_data_3[language_request_caster['language_db']]})\n"
                                            f"{pay_data_4[language_request_caster['language_db']]}",
                                       reply_markup=inline_keyboard_admin)
         elif call.data == "tips":
@@ -44,22 +56,9 @@ async def admin_check_handler(call: types.CallbackQuery):
                 await dp.bot.send_message(chat_id=casting_user,
                                           text=f"{done_response[language_request_caster['language_db']]}\n"
                                                f"{pay_data_1[language_request_caster['language_db']]}\n"
-                                               f"{pay_data_2[language_request_caster['language_db']]} 40$ (🇺🇿{pay_counter}{pay_data_3[language_request_caster['language_db']]})\n"
+                                               f"{pay_data_2[language_request_caster['language_db']]}- 40$ (=🇺🇿{int(pay_counter)} {pay_data_3[language_request_caster['language_db']]})\n"
                                                f"{pay_data_4[language_request_caster['language_db']]}",
                                           reply_markup=inline_keyboard_admin)
-            except exceptions.ChatNotFound as e:
-                logging.error(f"ChatNotFound error: {e}")
-
-
-        for delete_data in await db.select_all_data(casting_user):
-            try:
-                string_list_loop = delete_data["photo_id"]
-                result_list_loop = ast.literal_eval(string_list_loop)
-                for loop_id in result_list_loop:
-                    await dp.bot.delete_message(chat_id=delete_data['chat_id'],
-                                                message_id=loop_id)
-                await dp.bot.delete_message(chat_id=delete_data['chat_id'],
-                                            message_id=delete_data['message_id'])
             except exceptions.ChatNotFound as e:
                 logging.error(f"ChatNotFound error: {e}")
         await db.delete_data(casting_user)
