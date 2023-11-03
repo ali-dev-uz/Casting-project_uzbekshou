@@ -11,7 +11,7 @@ from utils.set_bot_commands import set_default_commands
 async def on_startup(dispatcher):
     schedule = AsyncIOScheduler()
     await db.create()
-    # await db.drop_users()
+    await db.drop_users()
     # await db.drop_static()
     # await db.drop_data()
     await db.create_table_users()

@@ -225,3 +225,37 @@ no_photo = {
 
 anime_grap = ['■□□□□□□□□□ 10%', '■■□□□□□□□□ 20%', '■■■□□□□□□□ 30%', '■■■■□□□□□□ 40%',
               '■■■■■□□□□□ 50%', '■■■■■■□□□□ 60%', '■■■■■■■□□□ 70%', '■■■■■■■■□□ 80%', '■■■■■■■■■□ 90%', '■■■■■■■■■■ 100%']
+
+casting_title = {
+    "uz": "https://telegra.ph/Biz-haqimizda-11-02",
+    "ru": "https://telegra.ph/O-nas-11-02-4"
+}
+
+casting_open = {
+    "uz": "https://telegra.ph/Ochiq-Caastinglar-11-02",
+    "ru": "https://telegra.ph/Otkrytye-kastingi-11-02"
+}
+
+casting_title_text = {
+    "uz": "Batafsil",
+    "ru": "Более"
+}
+casting_open_text = {
+    "uz": "Davom etyotgan Castinglar",
+    "ru": "Продолжающиеся кастинги"
+}
+
+member_text = {
+    "uz": "<b>❌ Kechirasiz botimizdan foydalanishdan oldin ushbu kanallarga a'zo bo'lishingiz kerak.</b>",
+    "ru": "<b>❌ </b>"
+}
+
+check_button_name = {
+    "uz": "✅ Tekshirish",
+    "ru": "✅ Проверить"
+}
+
+member_join_burron = {
+    "uz": "📢 Obuna bo'lish",
+    "ru": "📢 Подписаться"
+}

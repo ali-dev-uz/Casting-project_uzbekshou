@@ -1,5 +1,6 @@
-from . import sos
+from . import channel_msg
 from . import start
+from . import sos
 from . import language
 from . import appeal
 from . import image_processing

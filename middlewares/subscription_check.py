@@ -5,6 +5,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from handlers.users.Statictika import membership
 from handlers.users.archive import ADMIN_S
+from keyboards.default.menuKeyboard import menu_admin
 from loader import dp
 
 
@@ -18,18 +19,17 @@ class INVESTIGATION(BaseMiddleware):
             return
         try:
             consequent = await membership(user_id=user_id)
-            if not consequent:
-                pass
-            else:
+            if consequent:
                 if user_id in ADMIN_S:
-                    pass
+                    await dp.bot.send_message(
+                        f"<b>👋 Assalomu alaykum Admin</b>", reply_markup=menu_admin)
                 else:
                     keyboard_channel = InlineKeyboardMarkup(resize_keyboard=True, row_width=1)
                     for no_channel_info in consequent:
                         try:
                             if str(no_channel_info[:6]) == 'https:':
                                 try:
-                                    channel_link = InlineKeyboardButton("📢 Obuna bo'lish",
+                                    channel_link = InlineKeyboardButton("📢 Obuna bo'lish/Подписаться",
                                                                         url=f"{no_channel_info}")
                                     keyboard_channel.add(channel_link)
                                 except:
@@ -37,18 +37,19 @@ class INVESTIGATION(BaseMiddleware):
                         except:
                             try:
                                 info = await dp.bot.get_chat(chat_id=no_channel_info)
-                                channel_link = InlineKeyboardButton("📢 Obuna bo'lish",
+                                channel_link = InlineKeyboardButton(f"{info.full_name}",
                                                                     url=f"{info.invite_link}")
                                 keyboard_channel.add(channel_link)
                             except:
                                 pass
-                    channel_link = InlineKeyboardButton("✅ Tekshirish", callback_data="tekshirish")
+                    channel_link = InlineKeyboardButton("✅ Tekshirish/Проверять", callback_data="tekshirish")
                     keyboard_channel.add(channel_link)
                     await dp.bot.send_message(chat_id=user_id,
                                               text=
-                                              "<b>❌ Kechirasiz botimizdan foydalanishdan oldin ushbu kanallarga a'zo bo'lishingiz kerak.</b>",
+                                              "<b>Kechirasiz botimizdan foydalanishdan oldin ushbu kanallarga a'zo bo'lishingiz kerak.\n"
+                                              "К сожалению, вам необходимо подписаться на эти каналы, прежде чем использовать нашего бота.</b>",
                                               reply_markup=keyboard_channel)
-                raise CancelHandler()
+                    raise CancelHandler()
 
         except EOFError:
             pass

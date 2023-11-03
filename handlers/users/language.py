@@ -1,19 +1,20 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from handlers.users.start import orientation_lan, send_start_lan
+from handlers.users.start import orientation_lan, send_start_lan, send_welcome_message
 from handlers.users.vocabulary_words import welcome
 from loader import dp, db
 from states import Personaldata
 
 
 @dp.callback_query_handler(state=Personaldata.Selections.lan, text=["uz", "ru"])
-async def done_language(call: types.CallbackQuery, state: FSMContext):
+async def done_language(call_msg: types.CallbackQuery, state: FSMContext):
+    call = call_msg
     await db.update_language_db(language_db=call.data, telegram_id=call.message.chat.id)
     await call.message.delete()
     await state.finish()
     language_request_welcome_2 = await db.select_users_one(telegram_id=call.message.chat.id)
-    await call.message.answer(text=welcome[language_request_welcome_2['language_db']])
+    await send_welcome_message(user_id=call.message.chat.id, locale=language_request_welcome_2['language_db'])
     await orientation_lan(user_id=call.message.chat.id, locale=language_request_welcome_2['language_db'])
     await Personaldata.Welcome.wel.set()
 

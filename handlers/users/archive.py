@@ -1,6 +1,6 @@
 from loader import db
 
-CHANNELS = []
+CHANNELS = [-1002085516812]
 ADMIN_S = [5397857416]
 
 
