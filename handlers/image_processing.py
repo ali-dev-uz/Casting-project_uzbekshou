@@ -2,7 +2,6 @@ import ast
 import asyncio
 import logging
 
-import aiogram
 from aiogram.dispatcher import FSMContext
 import aiohttp
 from aiogram import types
@@ -87,12 +86,7 @@ async def acceptance_images(message: types.Message, state: FSMContext):
         for channel in SEND_CHANNELS:
             try:
                 await dp.bot.send_message(chat_id=channel, text="<b>YANGI NOMZOD👇🏻</b>")
-                try:
-                    await dp.bot.send_media_group(chat_id=channel, media=album)
-                except aiogram.utils.exceptions.RetryAfter:
-                    await asyncio.sleep(8)
-                    await dp.bot.send_media_group(chat_id=channel, media=album)
-
+                await dp.bot.send_media_group(chat_id=channel, media=album)
                 if language_request_acceptance['telegram'] is None:
                     Telegram = f"{message.from_user.get_mention(as_html=True)}"
                 else:
@@ -142,7 +136,6 @@ async def acceptance_images(message: types.Message, state: FSMContext):
                                                    f"•<b>Instagram:</b> {language_request_acceptance['instagram']}")
             except exceptions.ChatNotFound as e:
                 logging.error(f"ChatNotFound error: {e}")
-            await asyncio.sleep(1)
 
         inline_keyboard_acceptance_images = InlineKeyboardMarkup(row_width=2)
         inline_uz6_1 = InlineKeyboardButton(f"⛔️Rad etish",
@@ -213,7 +206,7 @@ async def acceptance_images(message: types.Message, state: FSMContext):
                                           chat_id=int(checker))
             except exceptions.ChatNotFound as e:
                 logging.error(f"ChatNotFound error: {e}")
-            await asyncio.sleep(1)
+
         await state.finish()
     else:
         inline_keyboard_photo2 = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
