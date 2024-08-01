@@ -20,7 +20,7 @@ from states import Personaldata
 async def done_photo(message: types.Message):
     try:
         arxiv = await dp.bot.send_photo(chat_id=-1001700284640, photo=message.photo[-1].file_id)
-        photo_url = f'https://t.me/bsbsi39idjdjxj/{arxiv.message_id}'
+        photo_url = f'https://t.me/bsbsi390000000idjdjxj/{arxiv.message_id}'
         language_request_input_photo = await db.select_users_one(telegram_id=message.chat.id)
         string_list_request = language_request_input_photo["photo"]
         result_list_request = ast.literal_eval(string_list_request)
