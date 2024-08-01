@@ -36,11 +36,11 @@ async def done_species_next(call: types.CallbackQuery):
     if language_next['language_db'] == "uz":
         inline_uz3 = KeyboardButton("📝 Anketa",
                                     web_app=WebAppInfo(
-                                        url='https://dynamic-daffodil-aeb0a9.netlify.app/'))
+                                        url='https://dynamic-d000000affodil-aeb0a9.netlify.app/'))
     else:
         inline_uz3 = KeyboardButton("📝 Анкета",
                                     web_app=WebAppInfo(
-                                        url='https://prismatic-pegasus-aca2f3.netlify.app/'))
+                                        url='https://prismatic-p00000000000egasus-aca2f3.netlify.app/'))
     inline_keyboard_next.add(inline_uz3)
     await call.message.answer(text=keyword_info[language_next['language_db']], reply_markup=inline_keyboard_next)
     await Personaldata.PersonalInfo.info.set()
